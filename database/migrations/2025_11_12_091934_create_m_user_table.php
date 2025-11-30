@@ -11,27 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('m_user', function (Blueprint $table) {
-        $table->id('user_id');
-        $table->unsignedBigInteger('level_id')->index();
-        $table->string('username', 20)->unique();
-        $table->string('nama', 100);
-        $table->string('password');
-        $table->timestamps();
+        Schema::create('m_user', function (Blueprint $table) {
+            $table->id('user_id');
+            $table->unsignedBigInteger('level_id')->index();
+            $table->string('username', 20)->unique();
+            $table->string('nama', 100);
+            $table->string('password');
+            $table->timestamps();
 
-        // foreign key
-        $table->foreign('level_id')->references('level_id')->on('m_level')->onDelete('cascade');
+            // foreign key
+            $table->foreign('level_id')
+                  ->references('level_id')
+                  ->on('m_level')
+                  ->onDelete('cascade');
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('m_user', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('m_user');
     }
 };
